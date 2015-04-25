@@ -2,30 +2,23 @@
 using System.Collections;
 using System.Timers;
 
-enum STATE {RAND, CONT};
+public enum STATE {RAND, CONT};
 
 public class PollenParticle : MonoBehaviour {
 
-	Vector2 position;
-	Vector2 velocity;
+	public Vector2 position;
+	public Vector2 velocity;
+	public int timerTime;
 	Timer changeDirectionTimer;
-	Vector3 color;
-	STATE state;
+	public Vector3 color;
+	public STATE state;
 
-
-	PollenParticle(Vector2 _pos, Vector2 _vel)
-	{
-		position = _pos;
-		velocity = _vel;
+	// Use this for initialization
+	void Start () {
 		changeDirectionTimer = new Timer(3000);
 		changeDirectionTimer.Elapsed += new ElapsedEventHandler(timerElapsed);
 		changeDirectionTimer.Enabled = true;
 		state = STATE.RAND;
-	}
-
-	// Use this for initialization
-	void Start () {
-	
 	}
 
 	void timerElapsed(object sender, ElapsedEventArgs e)
