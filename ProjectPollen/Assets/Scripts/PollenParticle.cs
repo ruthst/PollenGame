@@ -15,7 +15,7 @@ public class PollenParticle : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		changeDirectionTimer = new Timer(3000);
+		changeDirectionTimer = new Timer(timerTime);
 		changeDirectionTimer.Elapsed += new ElapsedEventHandler(timerElapsed);
 		changeDirectionTimer.Enabled = true;
 		state = STATE.RAND;
@@ -28,6 +28,6 @@ public class PollenParticle : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 }
