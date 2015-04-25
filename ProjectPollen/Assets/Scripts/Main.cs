@@ -1,22 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 using System.Diagnostics;
+using System.Timers;
+using System;
 
 public class Main : MonoBehaviour {
 
-	String elapsedTime;
+	string elapsedTime;
+	Stopwatch stopwatch;
 
 	// Use this for initialization
 	void Start () {
-		Stopwatch stopwatch = new Stopwatch();
+		stopwatch = new Stopwatch();
 		stopwatch.Start();
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Timespan ts = stopwatch.Elapsed;
+		TimeSpan ts = stopwatch.Elapsed;
 
 		elapsedTime = String.Format("{0:00}:{1:00}",
 			ts.Minutes, ts.Seconds);
