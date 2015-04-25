@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 using System.Timers;
 using System;
@@ -15,6 +16,8 @@ public class PollenParticle : MonoBehaviour {
 	System.Random rnd;
 	Rigidbody2D rbd;
 	bool swapVel;
+	Vector2 randomPos;
+	float waitSeconds = 10.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +27,7 @@ public class PollenParticle : MonoBehaviour {
 		changeDirectionTimer.Enabled = true;
 		state = STATE.RAND;
 		rbd = this.GetComponent<Rigidbody2D> ();
-		rbd.velocity = new Vector2 (1, 1);
+		rbd.velocity = new Vector2 (0,0);
 //		this.GetComponent<SpriteRenderer>().color = color;
 		swapVel = false;
 
@@ -36,44 +39,24 @@ public class PollenParticle : MonoBehaviour {
 	}
 
 	void doVelocityChange(){
-		int randomSwap = rnd.Next(0,4);
-		Vector2 tmpVel = new Vector2 (0, 0);
-		switch (randomSwap) {
-		case 0:
-			tmpVel.x += -5;
-			tmpVel.y = -rbd.velocity.y;
-			break;
-		case 1:
-			tmpVel.x = -rbd.velocity.x;
-			tmpVel.y += -5;
-			break;
-		case 2:
-			tmpVel.y = -rbd.velocity.y;
-			tmpVel.x += 5;
-			break;
-		case 3:
-			tmpVel.x = - rbd.velocity.x;
-			tmpVel.y += 5;
-			break;
-		}
-
-
-		rbd.AddForce (tmpVel);
-		
-		Debug.Log ("Do Velocity Change ran swap val:" + randomSwap);
+		randomPos = new Vector3 (UnityEngine.Random.Range( 8,-8 ), UnityEngine.Random.Range( 10, -10 ));
+		Debug.Log ("done waiting");
 	}
 
+
 	void FixedUpdate(){
-		if (swapVel) {
-			doVelocityChange ();
-			swapVel = false;
-		}
+		Vector2 newPoint = Vector2.Lerp (transform.position, randomPos, Time.deltaTime*1);
+		Vector2 newVelDir = newPoint - rbd.position;
+		rbd.AddForce (newVelDir);
 	}
 	// Update is called once per frame
 	void Update () {
 		if (swapVel) {
-			doVelocityChange ();
 			swapVel = false;
+			doVelocityChange();
 		}
+		Vector2 newPoint = Vector2.Lerp (transform.position, randomPos, Time.deltaTime*1);
+		Vector2 newVelDir = newPoint - rbd.position;
+		rbd.AddForce (newVelDir);
 	}
 }
