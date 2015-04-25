@@ -2,39 +2,34 @@
 using System.Collections;
 using System.Timers;
 
-enum STATE {RAND, CONT};
+public enum STATE {RAND, CONT};
 
 public class PollenParticle : MonoBehaviour {
 
-	Vector2 position;
-	Vector2 velocity;
+	public Vector2 position;
+	public int timerTime;
 	Timer changeDirectionTimer;
-	Vector3 color;
-	STATE state;
-
-
-	PollenParticle(Vector2 _pos, Vector2 _vel)
-	{
-		position = _pos;
-		velocity = _vel;
-		changeDirectionTimer = new Timer(3000);
-		changeDirectionTimer.Elapsed += new ElapsedEventHandler(timerElapsed);
-		changeDirectionTimer.Enabled = true;
-		state = STATE.RAND;
-	}
+	public Vector3 color;
+	public STATE state;
 
 	// Use this for initialization
 	void Start () {
-	
+		changeDirectionTimer = new Timer(timerTime);
+		changeDirectionTimer.Elapsed += new ElapsedEventHandler(timerElapsed);
+		changeDirectionTimer.Enabled = true;
+		state = STATE.RAND;
+		this.GetComponent<Rigidbody2D> ().velocity = Vector2 (1, 1);
 	}
 
-	void timerElapsed(object sender, ElapsedEventArgs e)
-	{
+	void timerElapsed(object sender, ElapsedEventArgs e){
 		// Change pollen direction
+
 	}
-	
+	void FixedUpdate(){
+
+	}
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 }
