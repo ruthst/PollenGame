@@ -5,13 +5,14 @@ using System.Timers;
 using System;
 
 public enum STATE {RAND, CONT};
+public enum COLOR {blue, green, orange, purple, red, teal, yellow};
 
 public class PollenParticle : MonoBehaviour {
 
 	public Vector2 position;
 	public int timerTime;
 	Timer changeDirectionTimer;
-	public Color color;
+	public COLOR color;
 	public STATE state;
 	System.Random rnd;
 	Rigidbody2D rbd;
@@ -39,6 +40,12 @@ public class PollenParticle : MonoBehaviour {
 	}
 
 	void doVelocityChange(){
+		float randX = UnityEngine.Random.Range (0.0f, 16.0f) - 8.0f;
+		float randY = UnityEngine.Random.Range (0.0f, 20.0f) - 10.0f;
+
+
+
+
 		randomPos = new Vector3 (UnityEngine.Random.Range( 8,-8 ), UnityEngine.Random.Range( 10, -10 ));
 		Debug.Log ("done waiting");
 	}
