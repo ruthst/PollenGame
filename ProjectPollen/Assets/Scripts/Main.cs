@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Diagnostics;
-using System.Timers;
 using System;
 
 public class Main : MonoBehaviour {
