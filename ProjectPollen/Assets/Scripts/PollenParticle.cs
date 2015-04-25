@@ -31,6 +31,7 @@ public class PollenParticle : MonoBehaviour {
 		rbd.velocity = new Vector2 (0,0);
 //		this.GetComponent<SpriteRenderer>().color = color;
 		swapVel = false;
+		doVelocityChange ();
 
 	}
 
@@ -40,13 +41,20 @@ public class PollenParticle : MonoBehaviour {
 	}
 
 	void doVelocityChange(){
-		float randX = UnityEngine.Random.Range (0.0f, 16.0f) - 8.0f;
-		float randY = UnityEngine.Random.Range (0.0f, 20.0f) - 10.0f;
+		float randX = UnityEngine.Random.Range (0.0f, 12.0f) - 8.0f;
+		float randY = UnityEngine.Random.Range (0.0f, 20.0f) - 12.0f;
 
+		// -2 to 2
+//		if (randX > -2.0f) {
+//			randX += 4;
+//		}
+//		if (randY > -2.0f) {
+//			randY += 4;
+//		}
 
+		Debug.Log ("new random point: " + randX + " randY: " + randY);
 
-
-		randomPos = new Vector3 (UnityEngine.Random.Range( 8,-8 ), UnityEngine.Random.Range( 10, -10 ));
+		randomPos = new Vector3 (randX, randY);
 		Debug.Log ("done waiting");
 	}
 
