@@ -5,7 +5,7 @@ using System.Timers;
 using System;
 
 public enum STATE {RAND, CONT};
-public enum COLOR {blue, green, orange, purple, red, teal, yellow};
+public enum COLOR {BLUE, GREEN, ORANGE, PURPLE, RED, TEAL, YELLOW, NONE};
 
 public class PollenParticle : MonoBehaviour {
 
@@ -41,28 +41,50 @@ public class PollenParticle : MonoBehaviour {
 	}
 
 	void doVelocityChange(){
-		float randX = UnityEngine.Random.Range (0.0f, 12.0f) - 8.0f;
-		float randY = UnityEngine.Random.Range (0.0f, 20.0f) - 12.0f;
+		float randX = UnityEngine.Random.Range (0.0f, 10.0f) - 5.0f;
+		float randY = UnityEngine.Random.Range (0.0f, 16.0f) - 8.0f;
 
-		// -2 to 2
-//		if (randX > -2.0f) {
-//			randX += 4;
+//		if (randX > -1.0f) {
+//			randX += 2;
 //		}
-//		if (randY > -2.0f) {
-//			randY += 4;
+//		if (randY > -1.0f) {
+//			randY += 2;
 //		}
+		Vector2 pos = transform.position;
+		Vector2 vel = rbd.velocity;
+		if (rbd.position.x < -6f) {
+			randX = 5.0f;
+			pos.x = -6.0f;
+			vel.x = 0;
+		} else if (rbd.position.x > 6f) {
+			randX = -5.0f;
+			pos.x = 6.0f;
+			vel.x = 0;
+		}
 
-		Debug.Log ("new random point: " + randX + " randY: " + randY);
+		if (rbd.position.y < -9f) {
+			randY = 8.5f;
+			pos.y = -10.0f;
+			vel.y = 0;
+		} else if (rbd.position.y > 9f) {
+			randY = -8.5f;
+			pos.y = 10.0f;
+			vel.y = 0;
+		}
+
+		transform.position = pos;
+		rbd.velocity = vel;
+
+
 
 		randomPos = new Vector3 (randX, randY);
-		Debug.Log ("done waiting");
 	}
 
 
 	void FixedUpdate(){
 		Vector2 newPoint = Vector2.Lerp (transform.position, randomPos, Time.deltaTime*1);
 		Vector2 newVelDir = newPoint - rbd.position;
-		rbd.AddForce (newVelDir);
+		rbd.AddForce (newVelDir * 0.9f);
 	}
 	// Update is called once per frame
 	void Update () {
@@ -72,6 +94,6 @@ public class PollenParticle : MonoBehaviour {
 		}
 		Vector2 newPoint = Vector2.Lerp (transform.position, randomPos, Time.deltaTime*1);
 		Vector2 newVelDir = newPoint - rbd.position;
-		rbd.AddForce (newVelDir);
+		rbd.AddForce (newVelDir * 1.5f);
 	}
 }
