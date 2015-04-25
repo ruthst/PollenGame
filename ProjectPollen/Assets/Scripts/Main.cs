@@ -26,21 +26,6 @@ public class Main : MonoBehaviour {
 		GameObject.Find("Counter").GetComponent<TextMesh>().text = elapsedTime;
 	}
 
-	/*
-	Generate new list of pollen to be achieved
-	*/
-	void newWorkList() {
-		//get 5 random numbers mod 8, use those to get sprite
-	}
-
-	/*
-	Check if pollen has been absorbed in order, and how many
-	Filter down colors and generate new ones at the end
-	*/
-	void updateWorkList() {
-
-		
-	}
 
 	void OnGUI () {
 	
