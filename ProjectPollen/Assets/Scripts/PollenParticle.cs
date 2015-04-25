@@ -41,16 +41,15 @@ public class PollenParticle : MonoBehaviour {
 	}
 
 	void doVelocityChange(){
-		float randX = UnityEngine.Random.Range (0.0f, 12.0f) - 8.0f;
-		float randY = UnityEngine.Random.Range (0.0f, 20.0f) - 12.0f;
+		float randX = UnityEngine.Random.Range (0.0f, 10.0f) - 6.0f;
+		float randY = UnityEngine.Random.Range (0.0f, 20.0f) - 10.0f;
 
-		// -2 to 2
-//		if (randX > -2.0f) {
-//			randX += 4;
-//		}
-//		if (randY > -2.0f) {
-//			randY += 4;
-//		}
+		if (randX > -1.0f) {
+			randX += 2;
+		}
+		if (randY > -1.0f) {
+			randY += 2;
+		}
 
 		Debug.Log ("new random point: " + randX + " randY: " + randY);
 
@@ -62,7 +61,7 @@ public class PollenParticle : MonoBehaviour {
 	void FixedUpdate(){
 		Vector2 newPoint = Vector2.Lerp (transform.position, randomPos, Time.deltaTime*1);
 		Vector2 newVelDir = newPoint - rbd.position;
-		rbd.AddForce (newVelDir);
+		rbd.AddForce (newVelDir * 0.9f);
 	}
 	// Update is called once per frame
 	void Update () {
@@ -72,6 +71,6 @@ public class PollenParticle : MonoBehaviour {
 		}
 		Vector2 newPoint = Vector2.Lerp (transform.position, randomPos, Time.deltaTime*1);
 		Vector2 newVelDir = newPoint - rbd.position;
-		rbd.AddForce (newVelDir);
+		rbd.AddForce (newVelDir * 1.5f);
 	}
 }
