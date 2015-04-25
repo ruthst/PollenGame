@@ -4,7 +4,7 @@ using System.Collections;
 public class WorkList : MonoBehaviour {
 
 	public GameObject WorkListPrefab;
-	const int WORK_LIST_MAX = 1;
+	const int WORK_LIST_MAX = 8;
 
 	public Sprite[] sprites;
 
