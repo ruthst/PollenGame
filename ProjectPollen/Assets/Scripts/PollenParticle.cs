@@ -7,7 +7,6 @@ public enum STATE {RAND, CONT};
 public class PollenParticle : MonoBehaviour {
 
 	public Vector2 position;
-	public Vector2 velocity;
 	public int timerTime;
 	Timer changeDirectionTimer;
 	public Vector3 color;
@@ -19,13 +18,16 @@ public class PollenParticle : MonoBehaviour {
 		changeDirectionTimer.Elapsed += new ElapsedEventHandler(timerElapsed);
 		changeDirectionTimer.Enabled = true;
 		state = STATE.RAND;
+		this.GetComponent<Rigidbody2D> ().velocity = Vector2 (1, 1);
 	}
 
-	void timerElapsed(object sender, ElapsedEventArgs e)
-	{
+	void timerElapsed(object sender, ElapsedEventArgs e){
 		// Change pollen direction
+
 	}
-	
+	void FixedUpdate(){
+
+	}
 	// Update is called once per frame
 	void Update () {
 
