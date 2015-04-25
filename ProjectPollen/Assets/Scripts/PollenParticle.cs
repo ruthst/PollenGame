@@ -50,11 +50,7 @@ public class PollenParticle : MonoBehaviour {
 		if (randY > -1.0f) {
 			randY += 2;
 		}
-
-		Debug.Log ("new random point: " + randX + " randY: " + randY);
-
 		randomPos = new Vector3 (randX, randY);
-		Debug.Log ("done waiting");
 	}
 
 
