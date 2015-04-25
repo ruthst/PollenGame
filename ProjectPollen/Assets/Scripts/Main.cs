@@ -11,7 +11,7 @@ public class Main : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
-		mainTimer = new Timer(0);
+		timer = new Timer(0);
 		sec = 0f;
 		min = 0f;
 
@@ -20,6 +20,14 @@ public class Main : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		CountUp();
+	}
+
+	/*
+	Generate new list of pollen
+	*/
+	void newPollenList() {
+
+		
 	}
 
 	/*
@@ -83,4 +91,5 @@ public class Main : MonoBehaviour {
 		FormatTimer();
 		GUI.Label(new Rect(Screen.width/2-150,Screen.height/2-45,300,90), strMin + ":" + strSec + " / " + strMinutes + ":" + strSeconds + "\n");
 	}//end onGui
+
 }
