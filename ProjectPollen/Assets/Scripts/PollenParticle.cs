@@ -18,7 +18,7 @@ public class PollenParticle : MonoBehaviour {
 		changeDirectionTimer.Elapsed += new ElapsedEventHandler(timerElapsed);
 		changeDirectionTimer.Enabled = true;
 		state = STATE.RAND;
-		this.GetComponent<Rigidbody2D> ().velocity = Vector2 (1, 1);
+		this.GetComponent<Rigidbody2D> ().velocity = new Vector2 (1, 1);
 	}
 
 	void timerElapsed(object sender, ElapsedEventArgs e){
