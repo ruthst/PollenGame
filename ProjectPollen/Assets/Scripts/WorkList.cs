@@ -20,9 +20,17 @@ public class WorkList : MonoBehaviour {
 		newWorkList();
 	}
 	
+	/*
+	Check if pollen has been absorbed in order, and how many
+	Filter down colors 
+	generate new ones at the end
+	*/
+
 	// Update is called once per frame
 	void Update () {
-		updateWorkList();
+		removeOldWork();
+		shiftWorkList();
+		refillWorkList();
 	}
 
 
@@ -44,14 +52,36 @@ public class WorkList : MonoBehaviour {
 	}
 
 	/*
-	Check if pollen has been absorbed in order, and how many
-	Filter down colors 
-	generate new ones at the end
+	Remove the pollen that was successfully pulled into the node
 	*/
-	void updateWorkList() {
-
-		refillWorkList();
+	void removeOldWork(){
 	}
+
+
+	/*
+	Shift worklist colors to the left
+	*/
+	void shiftWorkList() {
+
+		int nextPollen = 0;
+		bool shiftNeeded = false;
+
+		for (int i = 0; i < WORK_LIST_MAX; i++) {
+			if (listObjects[i] != null) {
+				nextPollen = i;
+				shiftNeeded = true;
+				break;
+			}
+		}
+
+		if (shiftNeeded) {
+			foreach (GameObject elem in listObjects) {
+				elem.transform.localPosition = new Vector3(positions[listObjects.IndexOf(elem) - nextPollen].x, positions[listObjects.IndexOf(elem) - nextPollen].y, positions[listObjects.IndexOf(elem) - nextPollen].z)
+				;
+			}
+		}
+	}
+
 
 	/*
 	Generate new workList colors in empty slots
