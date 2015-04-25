@@ -41,15 +41,42 @@ public class PollenParticle : MonoBehaviour {
 	}
 
 	void doVelocityChange(){
-		float randX = UnityEngine.Random.Range (0.0f, 10.0f) - 6.0f;
-		float randY = UnityEngine.Random.Range (0.0f, 20.0f) - 10.0f;
+		float randX = UnityEngine.Random.Range (0.0f, 10.0f) - 5.0f;
+		float randY = UnityEngine.Random.Range (0.0f, 16.0f) - 8.0f;
 
-		if (randX > -1.0f) {
-			randX += 2;
+//		if (randX > -1.0f) {
+//			randX += 2;
+//		}
+//		if (randY > -1.0f) {
+//			randY += 2;
+//		}
+		Vector2 pos = transform.position;
+		Vector2 vel = rbd.velocity;
+		if (rbd.position.x < -6f) {
+			randX = 5.0f;
+			pos.x = -6.0f;
+			vel.x = 0;
+		} else if (rbd.position.x > 6f) {
+			randX = -5.0f;
+			pos.x = 6.0f;
+			vel.x = 0;
 		}
-		if (randY > -1.0f) {
-			randY += 2;
+
+		if (rbd.position.y < -9f) {
+			randY = 8.5f;
+			pos.y = -10.0f;
+			vel.y = 0;
+		} else if (rbd.position.y > 9f) {
+			randY = -8.5f;
+			pos.y = 10.0f;
+			vel.y = 0;
 		}
+
+		transform.position = pos;
+		rbd.velocity = vel;
+
+
+
 		randomPos = new Vector3 (randX, randY);
 	}
 
