@@ -7,12 +7,13 @@ public class Main : MonoBehaviour {
 
 	string elapsedTime;
 	Stopwatch stopwatch;
+	int score;
 
 	// Use this for initialization
 	void Start () {
 		stopwatch = new Stopwatch();
 		stopwatch.Start();
-
+		score = 0;
 	}
 	
 	// Update is called once per frame
@@ -21,6 +22,8 @@ public class Main : MonoBehaviour {
 
 		elapsedTime = String.Format("{0:00}:{1:00}",
 			ts.Minutes, ts.Seconds);
+
+		GameObject.Find("Counter").GetComponent<TextMesh>().text = elapsedTime;
 	}
 
 	/*
