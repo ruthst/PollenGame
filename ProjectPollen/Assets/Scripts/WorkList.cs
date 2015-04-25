@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WorkList : MonoBehaviour {
 
@@ -8,19 +9,20 @@ public class WorkList : MonoBehaviour {
 
 	public Sprite[] sprites;
 
-	public GameObject[] listObjects;
+	public List<GameObject> listObjects;
 
 	public Vector3[] positions;
 
 
 	// Use this for initialization
 	void Start () {
-	
+		listObjects = new List<GameObject>();
+		newWorkList();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		updateWorkList();
 	}
 
 
@@ -32,9 +34,10 @@ public class WorkList : MonoBehaviour {
 
 		for (int i = 0; i < WORK_LIST_MAX; i++) {
 
-			int random = Random.Range(0,8);
+			int random = Random.Range(0,7);
 
-			listObjects[i] = (GameObject) Instantiate(WorkListPrefab, positions[i], Quaternion.identity);
+			//Debug.Log("The random is " + random);
+			listObjects.Add((GameObject) Instantiate(WorkListPrefab, positions[i], Quaternion.identity));
 			listObjects[i].GetComponent<SpriteRenderer>().sprite = sprites[random];
 		}
 
@@ -56,9 +59,9 @@ public class WorkList : MonoBehaviour {
 	void refillWorkList() {
 		for (int i = 0; i < WORK_LIST_MAX; i++) {
 			if (listObjects[i] == null) {
-				int random = Random.Range(0,8);
+				int random = Random.Range(0,7);
 
-				listObjects[i] = (GameObject) Instantiate(WorkListPrefab, positions[i], Quaternion.identity);
+				listObjects.Add((GameObject) Instantiate(WorkListPrefab, positions[i], Quaternion.identity));
 				listObjects[i].GetComponent<SpriteRenderer>().sprite = sprites[random];
 			}
 
