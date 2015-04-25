@@ -9,7 +9,7 @@ public class PollenParticle : MonoBehaviour {
 	public Vector2 position;
 	public int timerTime;
 	Timer changeDirectionTimer;
-	public Vector3 color;
+	public Color color;
 	public STATE state;
 
 	// Use this for initialization
@@ -19,10 +19,12 @@ public class PollenParticle : MonoBehaviour {
 		changeDirectionTimer.Enabled = true;
 		state = STATE.RAND;
 		this.GetComponent<Rigidbody2D> ().velocity = new Vector2 (1, 1);
+		this.GetComponent<SpriteRenderer>().color = color;
 	}
 
 	void timerElapsed(object sender, ElapsedEventArgs e){
 		// Change pollen direction
+
 
 	}
 	void FixedUpdate(){
