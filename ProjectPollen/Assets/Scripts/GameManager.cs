@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour {
 				pollen.name = "pollen" + i;
 				int spriteNo = Random.Range(0,7);
 				pollen.GetComponent<PollenParticle>().color = (COLOR)spriteNo;
+				pollen.GetComponent<SpriteRenderer>().sprite = pollenSprites[spriteNo];
 				pollen.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-3.0f, 3.1f), Random.Range(-3.0f, 3.1f));
 				pollen.transform.parent = this.transform;
 				pollen.layer = 8;
@@ -60,7 +61,6 @@ public class GameManager : MonoBehaviour {
 		int cend = this.currentChain.Count - 1;
 		if (end >= 0) {
 			for (int i = 0; i < this.lineList.Count - 1; i++) {
-				Debug.Log("Here");
 				lineList[i].GetComponent<LineRenderer>().SetPosition(0, new Vector3(currentChain[i].transform.localPosition.x, currentChain[i].transform.localPosition.y, -1.0f));
 				lineList[i].GetComponent<LineRenderer>().SetPosition(1, new Vector3(currentChain[i+1].transform.localPosition.x, currentChain[i+1].transform.localPosition.y, -1.0f));
 			}
@@ -114,14 +114,15 @@ public class GameManager : MonoBehaviour {
 		this.mState = MSTATE.UNCHAIN;
 	}
 	
-	void centerCollided(GameObject gObj){
-		Debug.Log ("Center Collided");
+	void centerCollided(){
+		//Debug.Log ("Center Collided");
 		GameObject.Find ("WorkList").GetComponent<WorkList> ().BroadcastMessage ("move", this.currentChain.Count);
 		foreach (GameObject pollen in currentChain) {
 			Destroy(pollen);
 		}
 		this.currentChain.Clear ();
 		this.chainPositions.Clear ();
+		this.clearChain ();
 		this.mState = MSTATE.UNCHAIN;
 	}
 }

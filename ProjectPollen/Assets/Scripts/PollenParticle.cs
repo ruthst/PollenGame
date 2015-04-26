@@ -44,8 +44,8 @@ public class PollenParticle : MonoBehaviour {
 			Vector2 newVelDir = newPoint - rbd.position;
 			rbd.AddForce (newVelDir * 1.5f);
 		} else if (this.state == STATE.CONT) {
-			//Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			//this.transform.position = new Vector3(pos.x, pos.y, 0);
+//			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+//			this.transform.position = new Vector3(pos.x, pos.y, 0);
 			if (swapVel) {
 				swapVel = false;
 				doVelocityChange ();
@@ -99,13 +99,15 @@ public class PollenParticle : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log ("Edge detection");
-		List<GameObject> currChain = GameObject.Find ("Main Camera").GetComponent<GameManager>().currentChain;
-		Debug.Log ("Size1 : " + GameObject.Find ("Main Camera").GetComponent<GameManager>().currentChain.Count);
-		if (GameObject.Find ("Main Camera").GetComponent<GameManager>().currentChain.Contains(other.gameObject)) {
-			Debug.Log("dsadsadsa");
+		if (other.gameObject.name == "WallCollider") {
+			List<GameObject> currChain = GameObject.Find ("Main Camera").GetComponent<GameManager>().currentChain;
+			if (GameObject.Find ("Main Camera").GetComponent<GameManager>().currentChain.Contains(this.gameObject)) {
+				GameObject.Find ("Main Camera").GetComponent<GameManager> ().BroadcastMessage("clearChain");
+			}
+			GameObject.Find ("Main Camera").GetComponent<GameManager>().pollenList.Remove(this.gameObject);
+			GameObject.Find ("Main Camera").GetComponent<GameManager>().currentChain.Remove(this.gameObject);
+			Destroy(this.gameObject);
 		}
-		//GameObject.Find ("Main Camera").GetComponent<GameManager> ().BroadcastMessage("checkEdgeCollision", );
 	}
 	
 	void doVelocityChange(){

@@ -14,7 +14,10 @@ public class CenterCircleScript : MonoBehaviour {
 	}
 
 	void OnMouseOver() {
-		// Do End condition check
+		int count = GameObject.Find ("Main Camera").GetComponent<GameManager> ().currentChain.Count;
+		if (count > 0) {
+			GameObject.Find ("Main Camera").GetComponent<GameManager> ().BroadcastMessage ("centerCollided");
+		}
 	}
 
 	void OnTriggerEnter2D (Collider2D other){

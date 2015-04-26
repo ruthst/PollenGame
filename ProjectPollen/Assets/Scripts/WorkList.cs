@@ -50,7 +50,7 @@ public class WorkList : MonoBehaviour {
 		//This is the end game state
 		if ( positions[0].y >= 10.5) 
 		{
-			Debug.Log("KILL KILL KILL");
+			//Debug.Log("KILL KILL KILL");
 			Application.LoadLevel(Application.loadedLevel);
 		}
 	}
