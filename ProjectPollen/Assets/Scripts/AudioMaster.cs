@@ -6,7 +6,7 @@ public class AudioMaster : MonoBehaviour {
 
 	public AudioClip[] clips;
 	public AudioClip pop;
-	public AudioClip backgroundMusic;
+	public AudioClip beep;
 
 	//sample
 	//audio.PlayOneShot(pop, 0.7F);

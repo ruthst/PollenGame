@@ -92,6 +92,9 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 			foreach (COLOR color in nonExistent) {
+				
+
+				//Random Placement of new pollen
 				int randomDir = Random.Range(0,3) % 4;
 				float x;
 				float y;
@@ -126,6 +129,8 @@ public class GameManager : MonoBehaviour {
 			}
 		if (pollenList.Count < maxPollen) {
 			for (int i = pollenList.Count; i < maxPollen; i++) {
+				
+				//random placement of new
 				int randomDir = Random.Range(0,3) % 4;
 
 				float x;

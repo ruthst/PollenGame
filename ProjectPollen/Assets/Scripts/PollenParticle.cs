@@ -21,6 +21,9 @@ public class PollenParticle : MonoBehaviour {
 	Vector2 randomPos;
 	float waitSeconds = 10.0f;
 
+	AudioSource audio;
+	AudioClip beep;
+
 	// Use this for initialization
 	void Start () {
 		rnd = new System.Random ();
@@ -32,6 +35,9 @@ public class PollenParticle : MonoBehaviour {
 		//rbd.velocity = new Vector2 (0,0);
 		swapVel = false;
 		doVelocityChange ();
+
+		audio = GameObject.Find ("AudioObject").GetComponent<AudioSource>();
+		beep = GameObject.Find ("AudioObject").GetComponent<AudioMaster> ().beep;
 	}
 	// Update is called once per frame
 	void Update () {
@@ -80,6 +86,9 @@ public class PollenParticle : MonoBehaviour {
 					pollen.GetComponent<PollenParticle>().state = STATE.RAND;
 				}
 				GameObject.Find ("Main Camera").GetComponent<GameManager> ().BroadcastMessage("clearChain");
+
+				audio.PlayOneShot(beep, 0.2f);
+
 			}
 		}
 	}
@@ -91,13 +100,18 @@ public class PollenParticle : MonoBehaviour {
 		foreach (GameObject pollen in currChain) {
 			pollen.GetComponent<PollenParticle>().state = STATE.RAND;
 		}
+
 		GameObject.Find ("Main Camera").GetComponent<GameManager> ().BroadcastMessage("clearChain");
+
+		
+
 	}
 
 	void timerElapsed(object sender, ElapsedEventArgs e){
 		swapVel = true;
 	}
 
+	/*
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.name == "WallCollider") {
 			List<GameObject> currChain = GameObject.Find ("Main Camera").GetComponent<GameManager>().currentChain;
@@ -109,12 +123,15 @@ public class PollenParticle : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 	}
+	*/
 
 	void OnCollisionEnter2D(Collision2D other) {
 		if (other.gameObject.name == "WallCollider") {
 			List<GameObject> currChain = GameObject.Find ("Main Camera").GetComponent<GameManager>().currentChain;
 			if (GameObject.Find ("Main Camera").GetComponent<GameManager>().currentChain.Contains(this.gameObject)) {
 				GameObject.Find ("Main Camera").GetComponent<GameManager> ().BroadcastMessage("clearChain");
+
+				audio.PlayOneShot(beep, 0.2f);
 			}
 		}
 	}
