@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour {
 			pollen.GetComponent<SpriteRenderer>().sprite = pollenSprites[spriteNo];
 			pollen.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-3.0f, 3.1f), Random.Range(-3.0f, 3.1f));
 			pollen.transform.parent = GameObject.Find("PollenList").transform;
+			pollen.layer = 8;
+			pollen.transform.localScale = new Vector3(2.0f, 2.0f, 1.0f);
 			pollenList.Add(pollen);
 		}
 	}
@@ -42,6 +44,8 @@ public class GameManager : MonoBehaviour {
 				pollen.GetComponent<PollenParticle>().color = (COLOR)spriteNo;
 				pollen.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-3.0f, 3.1f), Random.Range(-3.0f, 3.1f));
 				pollen.transform.parent = this.transform;
+				pollen.layer = 8;
+				pollen.transform.localScale = new Vector3(2.0f, 2.0f, 1.0f);
 				pollenList.Add(pollen);
 			}
 		}

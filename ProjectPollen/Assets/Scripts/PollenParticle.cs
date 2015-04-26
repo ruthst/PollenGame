@@ -29,10 +29,9 @@ public class PollenParticle : MonoBehaviour {
 		changeDirectionTimer.Enabled = true;
 		state = STATE.RAND;
 		rbd = this.GetComponent<Rigidbody2D> ();
-		rbd.velocity = new Vector2 (0,0);
+		//rbd.velocity = new Vector2 (0,0);
 		swapVel = false;
 		doVelocityChange ();
-
 	}
 	// Update is called once per frame
 	void Update () {
@@ -92,6 +91,10 @@ public class PollenParticle : MonoBehaviour {
 
 	void timerElapsed(object sender, ElapsedEventArgs e){
 		swapVel = true;
+	}
+
+	void OnTriggerEnter2D(Collider2D other) {
+		Debug.Log ("dsadsa");
 	}
 	
 	void doVelocityChange(){
