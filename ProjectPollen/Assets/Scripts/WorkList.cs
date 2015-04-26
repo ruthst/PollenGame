@@ -55,6 +55,8 @@ public class WorkList : MonoBehaviour {
 	Remove the pollen that was successfully pulled into the node
 	*/
 	void removeOldWork(){
+
+
 	}
 
 
