@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour {
 
 				if (randomDir == 0) {
 					x = Random.Range(-4.9f, 4.9f);
-					y = Random.Range( 9.0f , 10.0f);
+					y = Random.Range( 7.0f , 8.0f);
 				}
 				else if (randomDir % 4 == 1) {
 					x = Random.Range( 5.0f, 6.0f);
@@ -208,7 +208,7 @@ public class GameManager : MonoBehaviour {
 
 				if (randomDir == 0) {
 					x = Random.Range(-4.9f, 4.9f);
-					y = Random.Range( 9.0f , 10.0f);
+					y = Random.Range( 7.0f , 8.0f);
 				}
 				else if (randomDir % 4 == 1) {
 					x = Random.Range( 5.0f, 6.0f);
