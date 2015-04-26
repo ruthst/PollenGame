@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour {
 	public List<GameObject> lineList;
 	public List<Vector3> chainPositions;
 
+	int chainSize;
+
+	AudioSource audio;
 
 	// Use this for initialization
 	void Start () {
@@ -66,6 +69,8 @@ public class GameManager : MonoBehaviour {
 			pollen.transform.localScale = new Vector3(2.0f, 2.0f, 1.0f);
 			pollenList.Add(pollen);
 		}
+
+		audio = GameObject.Find ("AudioObject").GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -198,7 +203,11 @@ public class GameManager : MonoBehaviour {
 			line1.GetComponent<LineRenderer> ().SetColors (color, color);
 			this.lineList.Add (line1);
 		}
-	}
+			//(int) this.currentChain[this.currentChain.Count - 1].GetComponent<PollenParticle>().color
+
+			AudioClip sound = GameObject.Find ("AudioObject").GetComponent<AudioMaster> ().clips[Random.Range(0,7)];
+			audio.PlayOneShot(sound ,0.7f);
+		}
 
 	void clearChain() {
 		this.currentChain.Clear ();
@@ -215,6 +224,9 @@ public class GameManager : MonoBehaviour {
 
 		//Debug.Log ("Center Collided");
 		GameObject.Find ("WorkList").GetComponent<WorkList> ().BroadcastMessage ("move", this.currentChain.Count);
+		
+		chainSize = currentChain.Count;
+
 		foreach (GameObject pollen in currentChain) {
 			iTween.ScaleTo(pollen, new Vector3(0.1f,0.1f,0.0f), 0.40f);
 			iTween.ScaleTo(pollen, iTween.Hash("scale" ,new Vector3(4.0f,4.0f,0.0f),"x", pollen.transform.position.x, "y", pollen.transform.position.y,"time", 0.20f, "delay", 0.20f));
@@ -225,6 +237,14 @@ public class GameManager : MonoBehaviour {
 			this.pollenList.Remove(pollen);
 			Destroy(pollen, 0.4f);
 		}
+
+		AudioClip pop = GameObject.Find ("AudioObject").GetComponent<AudioMaster> ().pop;
+		audio.clip = pop;
+
+		audio.volume = (0.3f * chainSize);
+		audio.PlayDelayed(0.3f);
+		//audio.PlayOneShot(pop, 0.5f);
+
 		this.currentChain.Clear ();
 		this.chainPositions.Clear ();
 		this.clearChain ();
