@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
 	public List<GameObject> currentChain;
 	public List<GameObject> lineList;
 	public List<Vector3> chainPositions;
+	WorkList workList;
 
 	int chainSize;
 
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		workList = GameObject.Find ("WorkList").GetComponent<WorkList>();
 		pollenList = new List<GameObject> ();
 		currentChain = new List<GameObject> ();
 		chainPositions = new List<Vector3> ();
@@ -56,6 +58,36 @@ public class GameManager : MonoBehaviour {
 				nonExistent.Add(GameObject.Find ("WorkList").GetComponent<WorkList> ().currColorList[i]);
 			}
 		}
+		// ensure that there is enough to chain
+		Dictionary<COLOR, int> colorCountList = new Dictionary<COLOR, int>();
+		Dictionary<COLOR, int> colorCountScreen = new Dictionary<COLOR, int>();
+
+		for(int i = 0; i < workList.currColorList.Count; i++){
+			if(colorCountList.ContainsKey(workList.currColorList[i]))
+			{
+				colorCountList[workList.currColorList[i]] += 1;
+			}else {
+				colorCountList.Add (workList.currColorList[i], 1);
+			}
+		}
+		foreach(GameObject pollen in pollenList){
+			if(colorCountScreen.ContainsKey(pollen.GetComponent<PollenParticle>().color))
+			{
+				colorCountScreen[pollen.GetComponent<PollenParticle>().color] += 1;
+			}else {
+				colorCountScreen.Add (pollen.GetComponent<PollenParticle>().color, 1);
+			}
+		}
+
+		foreach (COLOR col in colorCountList.Keys) {
+			if(colorCountList[col] > colorCountScreen[col]){
+				int diff = colorCountList[col] - colorCountScreen[col];
+				for(int j = 0; j < diff; j++){
+					nonExistent.Add(col);
+				}
+			}
+		}
+
 		foreach (COLOR color in nonExistent) {
 			float x = Random.Range(-4.9f, 4.9f);
 			float y = Random.Range(-8.9f, 8.0f);
