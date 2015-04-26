@@ -14,9 +14,21 @@ public class WorkList : MonoBehaviour {
 
 	public Vector3[] positions;
 
+	public int score;
+
+	public int timeLimit;
+
+	float smallOffset;
+	public float offSet = 1.8f;
+
 
 	// Use this for initialization
 	void Start () {
+		
+		smallOffset = offSet / (timeLimit * 50);
+
+		score = 0;
+
 		listObjects = new List<GameObject>();
 		currColorList = new List<COLOR> ();
 		newWorkList();
@@ -24,6 +36,23 @@ public class WorkList : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
+	}
+
+	void FixedUpdate() {
+		
+
+		for (int i = 0; i < listObjects.Count; i++) {
+			positions[i].y += smallOffset;
+			listObjects[i].transform.localPosition = positions[i];
+		}
+
+		//This is the end game state
+		if ( positions[0].y >= 10.5) 
+		{
+			Debug.Log("KILL KILL KILL");
+			Application.LoadLevel(Application.loadedLevel);
+		}
 	}
 
 
@@ -48,6 +77,8 @@ public class WorkList : MonoBehaviour {
 			listObjects.RemoveAt(0);
 			currColorList.RemoveAt(0);
 		}
+
+		score += numDone;
 	}
 
 
