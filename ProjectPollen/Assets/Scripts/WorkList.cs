@@ -28,9 +28,6 @@ public class WorkList : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		removeOldWork();
-		shiftWorkList();
-		refillWorkList();
 	}
 
 
@@ -54,33 +51,20 @@ public class WorkList : MonoBehaviour {
 	/*
 	Remove the pollen that was successfully pulled into the node
 	*/
-	void removeOldWork(){
-
-
+	void removeOldWork(int numDone){
+		for (int i = 0; i < numDone; i++) {
+			listObjects.RemoveAt(i);
+		}
 	}
 
 
 	/*
 	Shift worklist colors to the left
 	*/
-	void shiftWorkList() {
+	void shiftWorkList(int numDone) {
 
-		int nextPollen = 0;
-		bool shiftNeeded = false;
-
-		for (int i = 0; i < WORK_LIST_MAX; i++) {
-			if (listObjects[i] != null) {
-				nextPollen = i;
-				shiftNeeded = true;
-				break;
-			}
-		}
-
-		if (shiftNeeded) {
-			foreach (GameObject elem in listObjects) {
-				elem.transform.localPosition = new Vector3(positions[listObjects.IndexOf(elem) - nextPollen].x, positions[listObjects.IndexOf(elem) - nextPollen].y, positions[listObjects.IndexOf(elem) - nextPollen].z)
-				;
-			}
+		foreach (GameObject elem in listObjects) {
+				elem.transform.localPosition = new Vector3(positions[listObjects.IndexOf(elem) - numDone].x, positions[listObjects.IndexOf(elem) - numDone].y, positions[listObjects.IndexOf(elem) - numDone].z);
 		}
 	}
 
@@ -88,16 +72,20 @@ public class WorkList : MonoBehaviour {
 	/*
 	Generate new workList colors in empty slots
 	*/
-	void refillWorkList() {
-		for (int i = 0; i < WORK_LIST_MAX; i++) {
-			if (listObjects[i] == null) {
-				int random = Random.Range(0,7);
+	void refillWorkList(int numDone) {
+		for (int i = (WORK_LIST_MAX - numDone); i < WORK_LIST_MAX; i++) {
+			int random = Random.Range(0,7);
 
-				listObjects.Add((GameObject) Instantiate(WorkListPrefab, positions[i], Quaternion.identity));
-				listObjects[i].GetComponent<SpriteRenderer>().sprite = sprites[random];
-			}
+			listObjects.Add((GameObject) Instantiate(WorkListPrefab, positions[i], Quaternion.identity));
+			listObjects[i].GetComponent<SpriteRenderer>().sprite = sprites[random];
 
 		}
+	}
+
+	void move(int numDone) {
+		removeOldWork(numDone);
+		shiftWorkList(numDone);
+		refillWorkList(numDone);
 	}
 
 }
