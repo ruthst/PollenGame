@@ -37,11 +37,65 @@ public class GameManager : MonoBehaviour {
 			pollen.transform.localScale = new Vector3(2.0f, 2.0f, 1.0f);
 			pollenList.Add(pollen);
 		}
+		List<COLOR> nonExistent = new List<COLOR> ();
+		for (int i = 0; i < GameObject.Find ("WorkList").GetComponent<WorkList> ().currColorList.Count; i++) {
+			bool present = false;
+			foreach(GameObject pollen in pollenList) {
+				if(pollen.GetComponent<PollenParticle>().color == GameObject.Find ("WorkList").GetComponent<WorkList> ().currColorList[i]) {
+					present = true;
+					break;
+				}
+			}
+			if (!present) {
+				nonExistent.Add(GameObject.Find ("WorkList").GetComponent<WorkList> ().currColorList[i]);
+			}
+		}
+		foreach (COLOR color in nonExistent) {
+			float x = Random.Range(-4.9f, 4.9f);
+			float y = Random.Range(-8.9f, 8.0f);
+			GameObject pollen = (GameObject) Instantiate(pollenPrefab, new Vector3(x, y, 0), Quaternion.identity);
+			pollen.name = "pollen" + pollenList.Count;
+			int spriteNo = (int)color;
+			pollen.GetComponent<PollenParticle>().color = (COLOR)spriteNo;
+			pollen.GetComponent<SpriteRenderer>().sprite = pollenSprites[spriteNo];
+			pollen.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-3.0f, 3.1f), Random.Range(-3.0f, 3.1f));
+			pollen.transform.parent = GameObject.Find("PollenList").transform;
+			pollen.layer = 8;
+			pollen.transform.localScale = new Vector3(2.0f, 2.0f, 1.0f);
+			pollenList.Add(pollen);
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (pollenList.Count < maxPollen) {
+			List<COLOR> nonExistent = new List<COLOR> ();
+			for (int i = 0; i < GameObject.Find ("WorkList").GetComponent<WorkList> ().currColorList.Count; i++) {
+				bool present = false;
+				foreach(GameObject pollen in pollenList) {
+					if(pollen.GetComponent<PollenParticle>().color == GameObject.Find ("WorkList").GetComponent<WorkList> ().currColorList[i]) {
+						present = true;
+						break;
+					}
+				}
+				if (!present) {
+					nonExistent.Add(GameObject.Find ("WorkList").GetComponent<WorkList> ().currColorList[i]);
+				}
+			}
+			foreach (COLOR color in nonExistent) {
+				float x = Random.Range(-4.9f, 4.9f);
+				float y = Random.Range(-8.9f, 8.0f);
+				GameObject pollen = (GameObject) Instantiate(pollenPrefab, new Vector3(x, y, 0), Quaternion.identity);
+				pollen.name = "pollen" + pollenList.Count;
+				int spriteNo = (int)color;
+				pollen.GetComponent<PollenParticle>().color = (COLOR)spriteNo;
+				pollen.GetComponent<SpriteRenderer>().sprite = pollenSprites[spriteNo];
+				pollen.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-3.0f, 3.1f), Random.Range(-3.0f, 3.1f));
+				pollen.transform.parent = GameObject.Find("PollenList").transform;
+				pollen.layer = 8;
+				pollen.transform.localScale = new Vector3(2.0f, 2.0f, 1.0f);
+				pollenList.Add(pollen);
+			}
 			for (int i = pollenList.Count; i < maxPollen; i++) {
 				float x = Random.Range(-4.9f, 4.9f);
 				float y = Random.Range(-8.9f, 8.0f);
