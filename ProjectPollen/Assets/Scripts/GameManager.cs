@@ -220,6 +220,7 @@ public class GameManager : MonoBehaviour {
 			iTween.ScaleTo(pollen, iTween.Hash("scale" ,new Vector3(4.0f,4.0f,0.0f),"x", pollen.transform.position.x, "y", pollen.transform.position.y,"time", 0.20f, "delay", 0.20f));
 			pos = pollen.transform.localPosition;
 			pos = new Vector3 (pos.x, pos.y, -1.0f);
+			particlePrefab.GetComponent<ParticleSystem>().startColor = this.colorValues[(int)pollen.GetComponent<PollenParticle>().color];
 			Instantiate(particlePrefab, pos, Quaternion.identity);
 			this.pollenList.Remove(pollen);
 			Destroy(pollen, 0.4f);
