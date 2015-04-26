@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
 	int chainSize;
 
 	AudioSource audio;
+	AudioSource backGroundMusic;
 
 	// Use this for initialization
 	void Start () {
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour {
 			float y = Random.Range(-8.9f, 8.0f);
 			GameObject pollen = (GameObject) Instantiate(pollenPrefab, new Vector3(x, y, 0), Quaternion.identity);
 			pollen.name = "pollen" + i;
-			int spriteNo = Random.Range(0,7);
+			int spriteNo = Random.Range(0,5);
 			pollen.GetComponent<PollenParticle>().color = (COLOR)spriteNo;
 			pollen.GetComponent<SpriteRenderer>().sprite = pollenSprites[spriteNo];
 			pollen.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-3.0f, 3.1f), Random.Range(-3.0f, 3.1f));
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		audio = GameObject.Find ("AudioObject").GetComponent<AudioSource>();
+		//backGroundMusic = this.gameObject.GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame

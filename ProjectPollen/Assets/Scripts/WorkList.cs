@@ -62,7 +62,7 @@ public class WorkList : MonoBehaviour {
 	*/
 	void newWorkList() {
 		for (int i = 0; i < WORK_LIST_MAX; i++) {
-			int random = Random.Range(0,7);
+			int random = Random.Range(0,5);
 			currColorList.Add((COLOR)random);
 			listObjects.Add((GameObject) Instantiate(WorkListPrefab, positions[i], Quaternion.identity));
 			listObjects[i].GetComponent<SpriteRenderer>().sprite = sprites[random];
@@ -101,7 +101,7 @@ public class WorkList : MonoBehaviour {
 	*/
 	void refillWorkList(int numDone) {
 		for (int i = listObjects.Count; i < WORK_LIST_MAX; i++) {
-			int random = Random.Range(0,7);
+			int random = Random.Range(0,5);
 			currColorList.Add((COLOR)random);
 			listObjects.Add((GameObject) Instantiate(WorkListPrefab, positions[i], Quaternion.identity));
 			listObjects[i].GetComponent<SpriteRenderer>().sprite = sprites[random];

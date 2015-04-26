@@ -6,7 +6,7 @@ using System.Timers;
 using System;
 
 public enum STATE {RAND, CONT};
-public enum COLOR {BLUE, GREEN, ORANGE, PURPLE, RED, TEAL, YELLOW, NONE};
+public enum COLOR {BLUE, GREEN, ORANGE, PURPLE, RED, NONE};
 
 public class PollenParticle : MonoBehaviour {
 
