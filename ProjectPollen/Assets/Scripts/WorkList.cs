@@ -45,6 +45,7 @@ public class WorkList : MonoBehaviour {
 		for (int i = 0; i < listObjects.Count; i++) {
 			positions[i].y += smallOffset;
 			listObjects[i].transform.localPosition = positions[i];
+
 		}
 
 		//This is the end game state
@@ -87,7 +88,8 @@ public class WorkList : MonoBehaviour {
 	*/
 	void shiftWorkList(int numDone) {
 		for (int i = 0; i < listObjects.Count; i++) {
-			listObjects[i].transform.localPosition = positions[i];
+			iTween.MoveTo(listObjects[i], positions[i], 0.25f);
+			//listObjects[i].transform.localPosition = positions[i];
 		}
 		//foreach (GameObject elem in listObjects) {
 		//		elem.transform.localPosition = new Vector3(positions[listObjects.IndexOf(elem) - numDone].x, positions[listObjects.IndexOf(elem) - numDone].y, positions[listObjects.IndexOf(elem) - numDone].z);

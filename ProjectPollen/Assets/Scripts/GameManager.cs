@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
 	public int maxPollen;
 	public GameObject pollenPrefab;
 	public GameObject linePrefab;
+	public GameObject particlePrefab;
 	public Sprite[] pollenSprites;
 	public Color[] colorValues;
 	public MSTATE mState;
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour {
 	public List<GameObject> currentChain;
 	public List<GameObject> lineList;
 	public List<Vector3> chainPositions;
+
 
 	// Use this for initialization
 	void Start () {
@@ -68,7 +70,7 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (pollenList.Count < maxPollen) {
+
 			List<COLOR> nonExistent = new List<COLOR> ();
 			for (int i = 0; i < GameObject.Find ("WorkList").GetComponent<WorkList> ().currColorList.Count; i++) {
 				bool present = false;
@@ -83,8 +85,27 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 			foreach (COLOR color in nonExistent) {
-				float x = Random.Range(-4.9f, 4.9f);
-				float y = Random.Range(-8.9f, 8.0f);
+				int randomDir = Random.Range(0,3) % 4;
+				float x;
+				float y;
+
+				if (randomDir == 0) {
+					x = Random.Range(-4.9f, 4.9f);
+					y = Random.Range( 9.0f , 10.0f);
+				}
+				else if (randomDir % 4 == 1) {
+					x = Random.Range( 5.0f, 6.0f);
+					y = Random.Range( -10.0f , 10.0f);
+				}
+				else if (randomDir % 4 == 2) {
+					x = Random.Range(-4.9f, 4.9f);
+					y = Random.Range( -9.0f , -10.0f);
+				}
+				else {
+					x = Random.Range( -5.0f, -6.0f);
+					y = Random.Range( -10.0f , 10.0f);
+				}
+
 				GameObject pollen = (GameObject) Instantiate(pollenPrefab, new Vector3(x, y, 0), Quaternion.identity);
 				pollen.name = "pollen" + pollenList.Count;
 				int spriteNo = (int)color;
@@ -96,9 +117,30 @@ public class GameManager : MonoBehaviour {
 				pollen.transform.localScale = new Vector3(2.0f, 2.0f, 1.0f);
 				pollenList.Add(pollen);
 			}
+		if (pollenList.Count < maxPollen) {
 			for (int i = pollenList.Count; i < maxPollen; i++) {
-				float x = Random.Range(-4.9f, 4.9f);
-				float y = Random.Range(-8.9f, 8.0f);
+				int randomDir = Random.Range(0,3) % 4;
+
+				float x;
+				float y;
+
+				if (randomDir == 0) {
+					x = Random.Range(-4.9f, 4.9f);
+					y = Random.Range( 9.0f , 10.0f);
+				}
+				else if (randomDir % 4 == 1) {
+					x = Random.Range( 5.0f, 6.0f);
+					y = Random.Range( -10.0f , 10.0f);
+				}
+				else if (randomDir % 4 == 2) {
+					x = Random.Range(-4.9f, 4.9f);
+					y = Random.Range( -9.0f , -10.0f);
+				}
+				else {
+					x = Random.Range( -5.0f, -6.0f);
+					y = Random.Range( -10.0f , 10.0f);
+				}
+
 				GameObject pollen = (GameObject) Instantiate(pollenPrefab, new Vector3(x, y, 0), Quaternion.identity);
 				pollen.name = "pollen" + i;
 				int spriteNo = Random.Range(0,7);
@@ -169,10 +211,18 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	void centerCollided(){
+		Vector3 pos;
+
 		//Debug.Log ("Center Collided");
 		GameObject.Find ("WorkList").GetComponent<WorkList> ().BroadcastMessage ("move", this.currentChain.Count);
 		foreach (GameObject pollen in currentChain) {
-			Destroy(pollen);
+			iTween.ScaleTo(pollen, new Vector3(0.1f,0.1f,0.0f), 0.40f);
+			iTween.ScaleTo(pollen, iTween.Hash("scale" ,new Vector3(4.0f,4.0f,0.0f),"x", pollen.transform.position.x, "y", pollen.transform.position.y,"time", 0.20f, "delay", 0.20f));
+			pos = pollen.transform.localPosition;
+			pos = new Vector3 (pos.x, pos.y, -1.0f);
+			Instantiate(particlePrefab, pos, Quaternion.identity);
+			this.pollenList.Remove(pollen);
+			Destroy(pollen, 0.4f);
 		}
 		this.currentChain.Clear ();
 		this.chainPositions.Clear ();
