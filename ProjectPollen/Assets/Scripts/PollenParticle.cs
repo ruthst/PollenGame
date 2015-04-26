@@ -109,6 +109,15 @@ public class PollenParticle : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 	}
+
+	void OnCollisionEnter2D(Collision2D other) {
+		if (other.gameObject.name == "WallCollider") {
+			List<GameObject> currChain = GameObject.Find ("Main Camera").GetComponent<GameManager>().currentChain;
+			if (GameObject.Find ("Main Camera").GetComponent<GameManager>().currentChain.Contains(this.gameObject)) {
+				GameObject.Find ("Main Camera").GetComponent<GameManager> ().BroadcastMessage("clearChain");
+			}
+		}
+	}
 	
 	void doVelocityChange(){
 		float randX = UnityEngine.Random.Range (0.0f, 10.0f) - 5.0f;
