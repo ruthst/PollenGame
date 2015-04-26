@@ -16,7 +16,9 @@ public class WorkList : MonoBehaviour {
 
 	public int score;
 
-	public int timeLimit;
+	public float timeLimit;
+	float timeLeft;
+	public GameObject lifeBar;
 
 	float smallOffset;
 	public float offSet = 1.8f;
@@ -32,28 +34,24 @@ public class WorkList : MonoBehaviour {
 		listObjects = new List<GameObject>();
 		currColorList = new List<COLOR> ();
 		newWorkList();
+		timeLeft = timeLimit;
+
 	}
 
 	// Update is called once per frame
 	void Update () {
-
+		float currPercent = 1.0f - (timeLeft / timeLimit);
+		lifeBar.GetComponent<Renderer>().material.SetFloat("_Cutoff", currPercent); 
 	}
 
 	void FixedUpdate() {
-		
+		timeLeft = timeLeft - Time.deltaTime;
 
-		for (int i = 0; i < listObjects.Count; i++) {
-			positions[i].y += smallOffset;
-			listObjects[i].transform.localPosition = positions[i];
-
+		if (timeLeft < 0) {
+			Debug.Log("KILL");
+			Application.LoadLevel("GameOver");
 		}
 
-		//This is the end game state
-		if ( positions[0].y >= 10.5) 
-		{
-			//Debug.Log("KILL KILL KILL");
-			Application.LoadLevel(Application.loadedLevel);
-		}
 	}
 
 
