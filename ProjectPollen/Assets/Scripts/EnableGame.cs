@@ -5,6 +5,9 @@ public class EnableGame : StateMachineBehaviour {
 	
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 		GameObject.Find ("Main Camera").GetComponent<IntroMain> ().readyToStart = true;
+		GameObject.Find("titleFlowerCenter").GetComponent<Animator>().SetBool("gameStart", true);
+		GameObject.Find("Title").GetComponent<Animator>().SetBool("gameStart", true);
+		GameObject.Find("beginText").GetComponent<Animator>().SetBool("gameStart", true);
 	}
 	
 //	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
