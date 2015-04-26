@@ -76,16 +76,16 @@ public class WorkList : MonoBehaviour {
 	}
 
 	void move(int numDone) {
-		foreach (COLOR elem in currColorList) {
-			Debug.Log(elem);
-		}
-		Debug.Log ("dsajdsad");
+//		foreach (COLOR elem in currColorList) {
+//			Debug.Log(elem);
+//		}
+//		Debug.Log ("dsajdsad");
 		removeOldWork(numDone);
 		shiftWorkList(numDone);
 		refillWorkList(numDone);
-		Debug.Log ("sdasdsad");
-		foreach (COLOR elem in currColorList) {
-			Debug.Log(elem);
-		}
+//		Debug.Log ("sdasdsad");
+//		foreach (COLOR elem in currColorList) {
+//			Debug.Log(elem);
+//		}
 	}
 }

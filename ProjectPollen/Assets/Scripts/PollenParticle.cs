@@ -44,16 +44,22 @@ public class PollenParticle : MonoBehaviour {
 			Vector2 newVelDir = newPoint - rbd.position;
 			rbd.AddForce (newVelDir * 1.5f);
 		} else if (this.state == STATE.CONT) {
-			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			this.transform.position = new Vector3(pos.x, pos.y, 0);
+			//Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			//this.transform.position = new Vector3(pos.x, pos.y, 0);
+			if (swapVel) {
+				swapVel = false;
+				doVelocityChange ();
+			}
+			Vector2 newPoint = Vector2.Lerp (transform.position, randomPos, Time.deltaTime * 1);
+			Vector2 newVelDir = newPoint - rbd.position;
+			rbd.AddForce (newVelDir * 1.5f);
 		}
 	}
 
 	void OnMouseDown() {
 		if (GameObject.Find ("WorkList").GetComponent<WorkList> ().currColorList[0] == this.color) {
 			this.state = STATE.CONT;
-			GameObject.Find ("Main Camera").GetComponent<GameManager> ().mState = MSTATE.CHAIN;
-			GameObject.Find ("Main Camera").GetComponent<GameManager> ().currentChain.Add(this.gameObject);
+			GameObject.Find ("Main Camera").GetComponent<GameManager> ().BroadcastMessage("addPollenToChain", this.gameObject);
 		} else {
 			Debug.Log("Wrong Click de-grow circle in center");
 		}
@@ -68,12 +74,12 @@ public class PollenParticle : MonoBehaviour {
 				return;
 			} else if (colorList[currChain.Count] == this.color) {
 				this.state = STATE.CONT;
-				GameObject.Find ("Main Camera").GetComponent<GameManager> ().currentChain.Add(this.gameObject);
+				GameObject.Find ("Main Camera").GetComponent<GameManager> ().BroadcastMessage("addPollenToChain", this.gameObject);
 			} else {
 				foreach (GameObject pollen in currChain) {
 					pollen.GetComponent<PollenParticle>().state = STATE.RAND;
 				}
-				GameObject.Find ("Main Camera").GetComponent<GameManager> ().currentChain.Clear();
+				GameObject.Find ("Main Camera").GetComponent<GameManager> ().BroadcastMessage("clearChain");
 			}
 		}
 	}
@@ -81,12 +87,11 @@ public class PollenParticle : MonoBehaviour {
 	void OnMouseUp() {
 		//Debug.Log ("Un clicked : " + this.name);
 		this.state = STATE.RAND;
-		GameObject.Find ("Main Camera").GetComponent<GameManager> ().mState = MSTATE.UNCHAIN;
 		List<GameObject> currChain = GameObject.Find ("Main Camera").GetComponent<GameManager> ().currentChain;
 		foreach (GameObject pollen in currChain) {
 			pollen.GetComponent<PollenParticle>().state = STATE.RAND;
 		}
-		GameObject.Find ("Main Camera").GetComponent<GameManager> ().currentChain.Clear ();
+		GameObject.Find ("Main Camera").GetComponent<GameManager> ().BroadcastMessage("clearChain");
 	}
 
 	void timerElapsed(object sender, ElapsedEventArgs e){
@@ -94,7 +99,13 @@ public class PollenParticle : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log ("dsadsa");
+		Debug.Log ("Edge detection");
+		List<GameObject> currChain = GameObject.Find ("Main Camera").GetComponent<GameManager>().currentChain;
+		Debug.Log ("Size1 : " + GameObject.Find ("Main Camera").GetComponent<GameManager>().currentChain.Count);
+		if (GameObject.Find ("Main Camera").GetComponent<GameManager>().currentChain.Contains(other.gameObject)) {
+			Debug.Log("dsadsadsa");
+		}
+		//GameObject.Find ("Main Camera").GetComponent<GameManager> ().BroadcastMessage("checkEdgeCollision", );
 	}
 	
 	void doVelocityChange(){

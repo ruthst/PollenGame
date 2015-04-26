@@ -11,12 +11,16 @@ public class CenterCircleScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-	} 
+	}
+
+	void OnMouseOver() {
+		// Do End condition check
+	}
 
 	void OnTriggerEnter2D (Collider2D other){
 		//Debug.Log ("Collided");
-		if (GameObject.Find ("Main Camera").GetComponent<GameManager> ().currentChain.Contains (other.gameObject)) {
-			GameObject.Find ("Main Camera").GetComponent<GameManager> ().BroadcastMessage ("centerCollided", other.gameObject);
-		}
+//		if (GameObject.Find ("Main Camera").GetComponent<GameManager> ().currentChain.Contains (other.gameObject)) {
+//			GameObject.Find ("Main Camera").GetComponent<GameManager> ().BroadcastMessage ("centerCollided", other.gameObject);
+//		}
 	}
 }
