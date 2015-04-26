@@ -48,7 +48,7 @@ public class WorkList : MonoBehaviour {
 		timeLeft = timeLeft - Time.deltaTime;
 
 		if (timeLeft < 0) {
-			Debug.Log("KILL");
+			PlayerPrefs.SetInt("SCORE", score);
 			Application.LoadLevel("GameOver");
 		}
 
