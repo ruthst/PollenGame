@@ -212,7 +212,7 @@ public class GameManager : MonoBehaviour {
 		}
 			//(int) this.currentChain[this.currentChain.Count - 1].GetComponent<PollenParticle>().color
 
-			AudioClip sound = GameObject.Find ("AudioObject").GetComponent<AudioMaster> ().clips[Random.Range(0,7)];
+			AudioClip sound = GameObject.Find ("AudioObject").GetComponent<AudioMaster> ().clips[Random.Range(0,4)];
 			audio.PlayOneShot(sound ,0.7f);
 		}
 
