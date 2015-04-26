@@ -51,6 +51,7 @@ public class WorkList : MonoBehaviour {
 		if ( positions[0].y >= 10.5) 
 		{
 			Debug.Log("KILL KILL KILL");
+			Application.LoadLevel(Application.loadedLevel);
 		}
 	}
 
