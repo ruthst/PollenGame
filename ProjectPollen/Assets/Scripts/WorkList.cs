@@ -67,6 +67,7 @@ public class WorkList : MonoBehaviour {
 			listObjects.Add((GameObject) Instantiate(WorkListPrefab, positions[i], Quaternion.identity));
 			listObjects[i].GetComponent<SpriteRenderer>().sprite = sprites[random];
 		}
+		listObjects [0].transform.localScale += new Vector3 (0.01f, 0f, 0f);
 	}
 
 	/*
@@ -79,7 +80,7 @@ public class WorkList : MonoBehaviour {
 			currColorList.RemoveAt(0);
 		}
 
-		score += numDone;
+
 	}
 
 
@@ -116,6 +117,11 @@ public class WorkList : MonoBehaviour {
 		removeOldWork(numDone);
 		shiftWorkList(numDone);
 		refillWorkList(numDone);
+
+		listObjects [0].transform.localScale += new Vector3 (0.01f, 0f, 0f);
+
+		score += numDone + numDone - 1;
+
 //		Debug.Log ("sdasdsad");
 //		foreach (COLOR elem in currColorList) {
 //			Debug.Log(elem);
