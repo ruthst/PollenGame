@@ -144,14 +144,14 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 			
-			foreach (COLOR col in colorCountList.Keys) {
-				if(colorCountList[col] > colorCountScreen[col]){
-					int diff = colorCountList[col] - colorCountScreen[col];
-					for(int j = 0; j < diff; j++){
-						nonExistent.Add(col);
-					}
-				}
-			}
+//			foreach (COLOR col in colorCountList.Keys) {
+//				if(colorCountList[col] > colorCountScreen[col]){
+//					int diff = colorCountList[col] - colorCountScreen[col];
+//					for(int j = 0; j < diff; j++){
+//						nonExistent.Add(col);
+//					}
+//				}
+//			}
 
 			foreach (COLOR color in nonExistent) {
 				
