@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using System.Collections.Generic;
 using System.Timers;
 using System;
 
@@ -29,27 +30,73 @@ public class PollenParticle : MonoBehaviour {
 		state = STATE.RAND;
 		rbd = this.GetComponent<Rigidbody2D> ();
 		rbd.velocity = new Vector2 (0,0);
-//		this.GetComponent<SpriteRenderer>().color = color;
 		swapVel = false;
 		doVelocityChange ();
 
 	}
-
-	void timerElapsed(object sender, ElapsedEventArgs e){
-		// Change pollen direction
-		swapVel = true;
+	// Update is called once per frame
+	void Update () {
+		if (this.state == STATE.RAND) {
+			if (swapVel) {
+				swapVel = false;
+				doVelocityChange ();
+			}
+			Vector2 newPoint = Vector2.Lerp (transform.position, randomPos, Time.deltaTime * 1);
+			Vector2 newVelDir = newPoint - rbd.position;
+			rbd.AddForce (newVelDir * 1.5f);
+		} else if (this.state == STATE.CONT) {
+			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			this.transform.position = new Vector3(pos.x, pos.y, 0);
+		}
 	}
 
+	void OnMouseDown() {
+		if (GameObject.Find ("WorkList").GetComponent<WorkList> ().currColorList[0] == this.color) {
+			this.state = STATE.CONT;
+			GameObject.Find ("Main Camera").GetComponent<GameManager> ().mState = MSTATE.CHAIN;
+			GameObject.Find ("Main Camera").GetComponent<GameManager> ().currentChain.Add(this.gameObject);
+		} else {
+			Debug.Log("Wrong Click de-grow circle in center");
+		}
+	}
+
+	void OnMouseOver() {
+		if (GameObject.Find ("Main Camera").GetComponent<GameManager> ().mState == MSTATE.CHAIN) {
+			List<GameObject> currChain = GameObject.Find ("Main Camera").GetComponent<GameManager> ().currentChain;
+			List<COLOR> colorList = GameObject.Find ("WorkList").GetComponent<WorkList> ().currColorList;
+			if (currChain.Contains(this.gameObject)) {
+				this.state = STATE.CONT;
+				return;
+			} else if (colorList[currChain.Count] == this.color) {
+				this.state = STATE.CONT;
+				GameObject.Find ("Main Camera").GetComponent<GameManager> ().currentChain.Add(this.gameObject);
+			} else {
+				foreach (GameObject pollen in currChain) {
+					pollen.GetComponent<PollenParticle>().state = STATE.RAND;
+				}
+				GameObject.Find ("Main Camera").GetComponent<GameManager> ().currentChain.Clear();
+			}
+		}
+	}
+
+	void OnMouseUp() {
+		//Debug.Log ("Un clicked : " + this.name);
+		this.state = STATE.RAND;
+		GameObject.Find ("Main Camera").GetComponent<GameManager> ().mState = MSTATE.UNCHAIN;
+		List<GameObject> currChain = GameObject.Find ("Main Camera").GetComponent<GameManager> ().currentChain;
+		foreach (GameObject pollen in currChain) {
+			pollen.GetComponent<PollenParticle>().state = STATE.RAND;
+		}
+		GameObject.Find ("Main Camera").GetComponent<GameManager> ().currentChain.Clear ();
+	}
+
+	void timerElapsed(object sender, ElapsedEventArgs e){
+		swapVel = true;
+	}
+	
 	void doVelocityChange(){
 		float randX = UnityEngine.Random.Range (0.0f, 10.0f) - 5.0f;
 		float randY = UnityEngine.Random.Range (0.0f, 16.0f) - 8.0f;
-
-//		if (randX > -1.0f) {
-//			randX += 2;
-//		}
-//		if (randY > -1.0f) {
-//			randY += 2;
-//		}
 		Vector2 pos = transform.position;
 		Vector2 vel = rbd.velocity;
 		if (rbd.position.x < -6f) {
@@ -61,7 +108,6 @@ public class PollenParticle : MonoBehaviour {
 			pos.x = 6.0f;
 			vel.x = 0;
 		}
-
 		if (rbd.position.y < -9f) {
 			randY = 8.5f;
 			pos.y = -10.0f;
@@ -71,29 +117,8 @@ public class PollenParticle : MonoBehaviour {
 			pos.y = 10.0f;
 			vel.y = 0;
 		}
-
 		transform.position = pos;
 		rbd.velocity = vel;
-
-
-
 		randomPos = new Vector3 (randX, randY);
-	}
-
-
-	void FixedUpdate(){
-		Vector2 newPoint = Vector2.Lerp (transform.position, randomPos, Time.deltaTime*1);
-		Vector2 newVelDir = newPoint - rbd.position;
-		rbd.AddForce (newVelDir * 0.9f);
-	}
-	// Update is called once per frame
-	void Update () {
-		if (swapVel) {
-			swapVel = false;
-			doVelocityChange();
-		}
-		Vector2 newPoint = Vector2.Lerp (transform.position, randomPos, Time.deltaTime*1);
-		Vector2 newVelDir = newPoint - rbd.position;
-		rbd.AddForce (newVelDir * 1.5f);
 	}
 }

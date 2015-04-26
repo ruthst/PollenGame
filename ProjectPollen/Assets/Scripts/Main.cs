@@ -23,9 +23,9 @@ public class Main : MonoBehaviour {
 		elapsedTime = String.Format("{0:00}:{1:00}",
 			ts.Minutes, ts.Seconds);
 
-		GameObject.Find("Counter").GetComponent<TextMesh>().text = elapsedTime;
+		score = GameObject.Find("WorkList").GetComponent<WorkList>().score;
+		GameObject.Find("Counter").GetComponent<TextMesh>().text = score.ToString();
 	}
-
 
 	void OnGUI () {
 	
