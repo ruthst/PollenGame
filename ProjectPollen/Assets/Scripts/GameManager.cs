@@ -32,8 +32,8 @@ public class GameManager : MonoBehaviour {
 		chainPositions = new List<Vector3> ();
 		lineList = new List<GameObject> ();
 		for (int i = 0; i < maxPollen; i++) {
-			float x = Random.Range(-4.9f, 4.9f);
-			float y = Random.Range(-8.9f, 8.0f);
+			float x = Random.Range(-4.5f, 4.5f);
+			float y = Random.Range(-8.7f, 7.2f);
 			GameObject pollen = (GameObject) Instantiate(pollenPrefab, new Vector3(x, y, 0), Quaternion.identity);
 			pollen.name = "pollen" + i;
 			int spriteNo = Random.Range(0,5);
@@ -93,8 +93,8 @@ public class GameManager : MonoBehaviour {
 		}
 
 		foreach (COLOR color in nonExistent) {
-			float x = Random.Range(-4.9f, 4.9f);
-			float y = Random.Range(-8.9f, 8.0f);
+			float x = Random.Range(-4.5f, 4.5f);
+			float y = Random.Range(-8.7f, 7.2f);
 			GameObject pollen = (GameObject) Instantiate(pollenPrefab, new Vector3(x, y, 0), Quaternion.identity);
 			pollen.name = "pollen" + pollenList.Count;
 			int spriteNo = (int)color;
@@ -167,17 +167,17 @@ public class GameManager : MonoBehaviour {
 			float y;
 
 			if (randomDir == 0) {
-				x = Random.Range (-4.9f, 4.9f);
-				y = Random.Range (7.0f, 8.0f);
+				x = Random.Range (-4.5f, 4.5f);
+				y = Random.Range (6.0f, 7.2f);
 			} else if (randomDir % 4 == 1) {
-				x = Random.Range (5.0f, 6.0f);
-				y = Random.Range (-10.0f, 10.0f);
+				x = Random.Range (3.5f, 4.5f);
+				y = Random.Range (-8.7f, 7.2f);
 			} else if (randomDir % 4 == 2) {
-				x = Random.Range (-4.9f, 4.9f);
-				y = Random.Range (-9.0f, -10.0f);
+				x = Random.Range (-4.5f, 4.5f);
+				y = Random.Range (-8.7f, -7.5f);
 			} else {
-				x = Random.Range (-5.0f, -6.0f);
-				y = Random.Range (-10.0f, 10.0f);
+				x = Random.Range (-4.5f, -3.5f);
+				y = Random.Range (-8.7f, 7.2f);
 			}
 
 			GameObject pollen = (GameObject)Instantiate (pollenPrefab, new Vector3 (x, y, 0), Quaternion.identity);
@@ -201,17 +201,17 @@ public class GameManager : MonoBehaviour {
 				float y;
 
 				if (randomDir == 0) {
-					x = Random.Range (-4.9f, 4.9f);
-					y = Random.Range (7.0f, 8.0f);
+					x = Random.Range (-4.5f, 4.5f);
+					y = Random.Range (6.0f, 7.2f);
 				} else if (randomDir % 4 == 1) {
-					x = Random.Range (5.0f, 6.0f);
-					y = Random.Range (-10.0f, 10.0f);
+					x = Random.Range (3.5f, 4.5f);
+					y = Random.Range (-8.7f, 7.2f);
 				} else if (randomDir % 4 == 2) {
-					x = Random.Range (-4.9f, 4.9f);
-					y = Random.Range (-9.0f, -10.0f);
+					x = Random.Range (-4.5f, 4.5f);
+					y = Random.Range (-8.7f, -7.5f);
 				} else {
-					x = Random.Range (-5.0f, -6.0f);
-					y = Random.Range (-10.0f, 10.0f);
+					x = Random.Range (-4.5f, -3.5f);
+					y = Random.Range (-8.7f, 7.2f);
 				}
 
 				GameObject pollen = (GameObject)Instantiate (pollenPrefab, new Vector3 (x, y, 0), Quaternion.identity);
@@ -289,7 +289,6 @@ public class GameManager : MonoBehaviour {
 
 	void TweenComplete(GameObject pollen) {
 		Destroy (pollen);
-		Debug.Log ("Tween Complete");
 	}
 	
 	void centerCollided(){
@@ -302,13 +301,14 @@ public class GameManager : MonoBehaviour {
 
 		foreach (GameObject pollen in currentChain) {
 			iTween.ScaleTo(pollen, new Vector3(0.1f,0.1f,0.0f), 0.40f);
-			iTween.ScaleTo(pollen, iTween.Hash("scale" ,new Vector3(4.0f,4.0f,1.0f),"x", pollen.transform.position.x, "y", pollen.transform.position.y,"time", 0.20f, "delay", 0.20f, "onCompleteTarget", this.gameObject, "onComplete", "TweenComplete", "onCompleteParams", pollen));
+			//"x", pollen.transform.position.x, "y", pollen.transform.position.y
+			iTween.ScaleTo(pollen, iTween.Hash("scale" ,new Vector3(3.4f,3.4f,1.0f),"time", 0.20f, "delay", 0.20f, "onCompleteTarget", this.gameObject, "onComplete", "TweenComplete", "onCompleteParams", pollen));
 			pos = pollen.transform.localPosition;
 			pos = new Vector3 (pos.x, pos.y, -1.0f);
 			particlePrefab.GetComponent<ParticleSystem>().startColor = this.colorValues[(int)pollen.GetComponent<PollenParticle>().color];
 			Instantiate(particlePrefab, pos, Quaternion.identity);
 			this.pollenList.Remove(pollen);
-			Destroy(pollen, 0.8f);
+			//Destroy(pollen, 0.8f);
 		}
 
 		AudioClip pop = GameObject.Find ("AudioObject").GetComponent<AudioMaster> ().pop;

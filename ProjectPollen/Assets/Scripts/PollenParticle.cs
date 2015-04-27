@@ -41,24 +41,37 @@ public class PollenParticle : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
+//		if (rbd.velocity.magnitude < 1) {
+//			Debug.Log(rbd.velocity.magnitude);
+//			rbd.AddForce(rbd.velocity * 2.5f);
+//			if (rbd.velocity.magnitude == 0) {
+//				Vector2 force = new Vector2(UnityEngine.Random.Range(1.0f,2.5f), UnityEngine.Random.Range(1.0f,2.5f));
+//				rbd.AddForce(force);
+//			}
+//		}
+		if (swapVel) {
+			swapVel = false;
+			doVelocityChange ();
+		}
+		Vector2 newPoint = Vector2.Lerp (transform.position, randomPos, Time.deltaTime * 1);
+		Vector2 newVelDir = newPoint - rbd.position;
+		rbd.AddForce (newVelDir * 1.5f);
 		if (this.state == STATE.RAND) {
-			if (swapVel) {
-				swapVel = false;
-				doVelocityChange ();
-			}
-			Vector2 newPoint = Vector2.Lerp (transform.position, randomPos, Time.deltaTime * 1);
-			Vector2 newVelDir = newPoint - rbd.position;
-			rbd.AddForce (newVelDir * 1.5f);
+//			if (swapVel) {
+//				swapVel = false;
+//				doVelocityChange ();
+//			}
+//			Vector2 newPoint = Vector2.Lerp (transform.position, randomPos, Time.deltaTime * 1);
+//			Vector2 newVelDir = newPoint - rbd.position;
+//			rbd.AddForce (newVelDir * 1.5f);
 		} else if (this.state == STATE.CONT) {
-//			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-//			this.transform.position = new Vector3(pos.x, pos.y, 0);
-			if (swapVel) {
-				swapVel = false;
-				doVelocityChange ();
-			}
-			Vector2 newPoint = Vector2.Lerp (transform.position, randomPos, Time.deltaTime * 1);
-			Vector2 newVelDir = newPoint - rbd.position;
-			rbd.AddForce (newVelDir * 1.5f);
+//			if (swapVel) {
+//				swapVel = false;
+//				doVelocityChange ();
+//			}
+//			Vector2 newPoint = Vector2.Lerp (transform.position, randomPos, Time.deltaTime * 1);
+//			Vector2 newVelDir = newPoint - rbd.position;
+//			rbd.AddForce (newVelDir * 1.5f);
 		}
 	}
 
