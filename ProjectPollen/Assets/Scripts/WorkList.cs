@@ -17,8 +17,9 @@ public class WorkList : MonoBehaviour {
 	public int score;
 
 	public float timeLimit;
-	float timeLeft;
+	public float timeLeft;
 	public GameObject lifeBar;
+	public bool startFlashing;
 
 	float smallOffset;
 	public float offSet = 1.8f;
@@ -26,7 +27,7 @@ public class WorkList : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		this.startFlashing = false;
 		smallOffset = offSet / (timeLimit * 50);
 
 		score = 0;
@@ -41,6 +42,13 @@ public class WorkList : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		float currPercent = 1.0f - (timeLeft / timeLimit);
+		if (!this.startFlashing && timeLeft < 5.0f) {
+			this.startFlashing = true;
+			GameObject centerCircle = GameObject.Find("CenterCircle");
+			Color col = centerCircle.GetComponent<SpriteRenderer>().color;
+			col = new Color(col.r, col.g, col.b, 0);
+			iTween.ColorTo(centerCircle, iTween.Hash("a", 0.2f, "time", 0.9f, "looptype", "pingpong"));
+		}
 		lifeBar.GetComponent<Renderer>().material.SetFloat("_Cutoff", currPercent); 
 	}
 
