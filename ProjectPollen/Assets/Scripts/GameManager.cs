@@ -159,13 +159,10 @@ public class GameManager : MonoBehaviour {
 		}
 
 		foreach (COLOR color in nonExistent) {
-			
-
 			//Random Placement of new pollen
 			int randomDir = Random.Range (0, 3) % 4;
 			float x;
 			float y;
-
 			if (randomDir == 0) {
 				x = Random.Range (-4.5f, 4.5f);
 				y = Random.Range (6.0f, 7.2f);
@@ -179,7 +176,6 @@ public class GameManager : MonoBehaviour {
 				x = Random.Range (-4.5f, -3.5f);
 				y = Random.Range (-8.7f, 7.2f);
 			}
-
 			GameObject pollen = (GameObject)Instantiate (pollenPrefab, new Vector3 (x, y, 0), Quaternion.identity);
 			pollen.name = "pollen" + pollenList.Count;
 			int spriteNo = (int)color;
